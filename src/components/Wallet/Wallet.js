@@ -3,12 +3,12 @@ import {useEffect, useState} from "react";
 import getWallet from "../../services/wallet/getWallet";
 import WalletAsset from "../WalletAsset/WalletAsset";
 
-const Wallet = () => {
+const Wallet = ({ exchange }) => {
     const [ walletAssets, setWalletAssets ] = useState([]);
 
     useEffect(() => {
-        getWallet().then(wallet => setWalletAssets(wallet));
-    }, []);
+        getWallet(exchange).then(wallet => setWalletAssets(wallet));
+    }, [ exchange ]);
 
     return (
         <div className="wallet py-3 space-y-3">

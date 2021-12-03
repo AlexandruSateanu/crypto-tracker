@@ -1,4 +1,4 @@
-const mockWallet = [
+const mockBinanceWallet = [
     {
         asset: 'BTC',
         price: '55000',
@@ -16,10 +16,10 @@ const mockWallet = [
     }
 ];
 
-const getWalletData = () => {
+const getBinanceWalletData = () => {
     return new Promise(resolve => {
-        resolve(mockWallet);
+        resolve(mockBinanceWallet);
     });
 };
 
-export default getWalletData;
+export default getBinanceWalletData;
