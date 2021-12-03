@@ -5,9 +5,12 @@ import WalletAsset from "../WalletAsset/WalletAsset";
 
 const Wallet = ({ exchange }) => {
     const [ walletAssets, setWalletAssets ] = useState([]);
+    const [ walletError, setWalletError ] = useState("");
 
     useEffect(() => {
-        getWallet(exchange).then(wallet => setWalletAssets(wallet));
+        getWallet(exchange)
+            .then(wallet => setWalletAssets(wallet))
+            .catch(error => setWalletError("There was an error importing data: " + error));
     }, [ exchange ]);
 
     return (
@@ -18,6 +21,7 @@ const Wallet = ({ exchange }) => {
                 <div className="px-1 font-bold font-mont">Quantity</div>
             </div>
             { walletAssets.map(asset => <WalletAsset asset={asset} key={asset.tokenSymbol} />) }
+            { walletError && <div className="rounded-md shadow-md bg-white p-3 flex text-red-400">{walletError}</div>}
         </div>
     );
 };
