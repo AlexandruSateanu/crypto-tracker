@@ -5,7 +5,7 @@ const WalletAsset = ({ asset }) => {
 
     return (
         <div className="comment rounded-md shadow-md bg-white p-3 flex">
-            <div className="font-semibold">
+            <div className="font-semibold font-mont">
                 { asset.tokenSymbol }
             </div>
             <div className="px-2">|</div>
