@@ -9,7 +9,10 @@ const Wallet = ({ exchange }) => {
 
     useEffect(() => {
         getWallet(exchange)
-            .then(wallet => setWalletAssets(wallet))
+            .then(wallet => {
+                console.log(wallet);
+                setWalletAssets(wallet);
+            })
             .catch(error => setWalletError("There was an error importing data: " + error));
     }, [ exchange ]);
 

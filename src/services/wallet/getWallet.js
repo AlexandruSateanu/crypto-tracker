@@ -1,4 +1,4 @@
-import getBinanceWalletData from '../../data/integrations/binance/mockBinanceWallet';
+import getBinanceWalletData from '../../data/integrations/binance/getBinanceWalletData';
 import transformBinanceWalletData from "../integrations/binance/transformBinanceWalletData";
 import getKukoinWalletData from "../../data/integrations/kukoin/mockKukoinWallet";
 import transformKukoinWalletData from "../integrations/kukoin/transformKukoinWalletData";

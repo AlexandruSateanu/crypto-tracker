@@ -1,3 +1,5 @@
+import makeBinanceRequest from "./makeBinanceRequest";
+
 /**
  * @param {object} config
  * @returns {Promise}
@@ -7,21 +9,7 @@ const getBinanceWalletData = (config) => {
         return Promise.reject("Invalid Binance API config");
     };
 
-    const binanceApi = config.BINANCE_API;
-    const params = new URLSearchParams({
-        timestamp: "aa",
-        signature: "bb"
-    });
-    const url = binanceApi.API_DOMAIN + binanceApi.API_PREFIX + binanceApi.ACCOUNT_INFORMATION + "?" + params;
-
-    return fetch(url, {
-        headers: {
-            "Cache-Control": "no-cache",
-            "content-type": "application/json",
-            "credentials": "include",
-            "X-MBX-APIKEY": "key"
-        }
-    }).then(response => response.json());
+    return makeBinanceRequest(config, config.BINANCE_API.ACCOUNT_INFORMATION);
 };
 
 export default getBinanceWalletData;
