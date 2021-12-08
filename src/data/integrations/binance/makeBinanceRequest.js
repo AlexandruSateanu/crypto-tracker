@@ -1,6 +1,3 @@
-import isEmptyQueryString from "../../../utils/isEmptyQueryString";
-import hmacSHA512 from 'crypto-js/hmac-sha256';
-
 /**
  * @param {object} config
  * @param {string} endpoint
@@ -8,46 +5,32 @@ import hmacSHA512 from 'crypto-js/hmac-sha256';
  * @returns {Promise}
  */
 const makeBinanceRequest = (config, endpoint, params = {}) => {
-    if (!config.BINANCE_API) {
-        return Promise.reject("Invalid Binance API config");
+    const binanceConfig = config.BINANCE;
+
+    if (!binanceConfig) {
+        return Promise.reject("Invalid crypto-tracker-api Binance config");
     };
 
-    const binanceApi = config.BINANCE_API;
-    const binanceSecretKey = binanceApi.SECRET_KEY;
-    const timestamp = Date.now();
-    let fullParams = {};
+    const apiKey = binanceConfig.API_KEY;
+    const secretKey = binanceConfig.SECRET_KEY;
 
-    if (params) {
-        Object.keys(params).forEach(key => {
-            if (key !== 'signature' && key !== 'timestamp' && !isEmptyQueryString(params[key])) {
-                fullParams[key] = params[key];
-            }
-        });
-    }
+    if (!apiKey || !secretKey) {
+        return Promise.reject("Invalid apiKey or secretKey");
+    };
 
-    Object.assign(fullParams, { timestamp });
+    const queryParams = new URLSearchParams({
+        apiKey,
+        secretKey,
+        ...params
+    });
 
-    if (binanceSecretKey) {
-        const queryString = Object.keys(fullParams).map((key) => {
-            return `${key}=${fullParams[key]}`;
-        }).join('&');
-
-        const signature = hmacSHA512(queryString, binanceSecretKey).toString();
-        Object.assign(fullParams, { signature });
-    }
-    console.log(fullParams);
-
-    const signedParams = new URLSearchParams(fullParams);
-
-    const url = binanceApi.API_DOMAIN + binanceApi.API_PREFIX + endpoint + "?" + signedParams;
+    const url = binanceConfig.CRYPTO_TRACKER_API_URL + endpoint + "?" + queryParams;
 
     return fetch(url, {
         headers: {
             "Cache-Control": "no-cache",
             "content-type": "application/json",
-            "credentials": "include",
-            "X-MBX-APIKEY": binanceApi.API_KEY,
-            "mode": "no-cors"
+            "credentials": "include"
         }
     }).then(response => response.json());
 };
