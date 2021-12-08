@@ -5,11 +5,11 @@ import makeBinanceRequest from "./makeBinanceRequest";
  * @returns {Promise}
  */
 const getBinanceWalletData = (config) => {
-    if (!config.BINANCE_API) {
-        return Promise.reject("Invalid Binance API config");
+    if (!config.BINANCE) {
+        return Promise.reject("Invalid crypto-tracker-api Binance config");
     };
 
-    return makeBinanceRequest(config, config.BINANCE_API.ACCOUNT_INFORMATION);
+    return makeBinanceRequest(config, config.BINANCE.WALLET_ENDPOINT);
 };
 
 export default getBinanceWalletData;

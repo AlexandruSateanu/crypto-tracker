@@ -10,11 +10,11 @@ const WalletAsset = ({ asset }) => {
             </div>
             <div className="px-2">|</div>
             <div>
-                { asset.price }
+                { asset.quantity }
             </div>
             <div className="px-2">|</div>
             <div>
-                { asset.quantity }
+                { asset.price }
             </div>
         </div>
     );

@@ -12,7 +12,7 @@ import config from "../../config/integrations";
 const getWallet = (exchange) => {
     switch (exchange) {
         case EXCHANGES.BINANCE:
-            return getBinanceWalletData(config).then(data => data.map(asset => transformBinanceWalletData(asset)));
+            return getBinanceWalletData(config).then(data => (data.wallet || []).map(asset => transformBinanceWalletData(asset)));
         case EXCHANGES.KUKOIN:
             return getKukoinWalletData().then(data => data.map(asset => transformKukoinWalletData(asset)));
         default:
